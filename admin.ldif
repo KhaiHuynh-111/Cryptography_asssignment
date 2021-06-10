@@ -1,0 +1,17 @@
+version: 1
+
+dn: ou=admin,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: admin
+
+dn: uid=admin,ou=admin,ou=system
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Admin
+sn: Admin
+uid: admin
+userPassword:: e01ENX1YcjRpbE96UTRQQ09xM2FRMHFidWFRPT0=
+

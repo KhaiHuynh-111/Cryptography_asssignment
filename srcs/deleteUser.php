@@ -1,6 +1,20 @@
 <?php
+    session_start();
     include 'config.php';
     // check role
+    if(isset($_SESSION['role'])){
+        $role = $_SESSION['role'];
+        if ($role == 'user'){
+            echo "<script> alert(\"You dont have pemission to do this task\")</script>";
+            header("Refresh:0,url=detailInformation.php");
+            exit();
+        }
+        else if ($role == 'manager'){
+            echo "<script> alert(\"You dont have pemission to do this task\")</script>";
+            header("Refresh:0,url=home.php");
+            exit();
+        }
+    }
 
     // find user then delete
     if(isset($_GET['uid'])){

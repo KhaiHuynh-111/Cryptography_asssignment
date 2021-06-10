@@ -1,0 +1,17 @@
+version: 1
+
+dn: ou=manager,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: manager
+
+dn: uid=manager,ou=manager,ou=system
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: John
+sn: Cena
+uid: manager
+userPassword:: e01ENX00UXJjT1VtNldhdStWdUJYOGcrSVBnPT0=
+

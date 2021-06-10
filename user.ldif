@@ -1,0 +1,44 @@
+version: 1
+
+dn: ou=user,ou=system
+objectClass: organizationalUnit
+objectClass: top
+ou: user
+
+dn: uid=mew,ou=user,ou=system
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Kai
+sn: Huyn
+mail: example@gmail.com
+uid: mew
+userPassword:: e01ENX00UXJjT1VtNldhdStWdUJYOGcrSVBnPT0=
+
+dn: uid=mew3,ou=user,ou=system
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Huynh
+sn: Khai
+mail: kakaokoan@gmail.com
+mobile: 0328454738
+uid: mew3
+userpassword:: e1NTSEF9QUNHVXc4TmRFZmcrM0tUb3hBRjZzekhwSVcxb1JIUHA1Z1FPMUE9P
+ Q==
+
+dn: uid=mew5,ou=user,ou=system
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+cn: Nguyen Danh
+sn: Tu
+mail: tututu@gmail.com
+mobile: 0123456789
+uid: mew5
+userPassword:: e1NTSEF9STNNeUpUTUMxMk1tSEpWRlg5L1Z2N1l5NWhzajIxTGc0Nzc1MlE9P
+ Q==
+

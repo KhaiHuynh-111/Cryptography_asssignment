@@ -1,5 +1,47 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <style>
+        nav {
+          height: 8vh;
+        }
+  
+        .container {
+          width: 30%;
+          height: 92vh;
+        }
+  
+        button {
+          width: 100%;
+        }
+      </style>
+
+    <title>Edit</title>
+</head>
+<body>
 <?php
+    session_start();
     include 'config.php';
+    if(isset($_SESSION['role'])){
+        $role = $_SESSION['role'];
+        if ($role == 'user'){
+            echo "<script> alert(\"You dont have pemission to do this task\")</script>";
+            header("Refresh:0,url=detailInformation.php");
+        }
+        else if ($role == 'manager'){
+            echo "<script> alert(\"You dont have pemission to do this task\")</script>";
+            header("Refresh:0,url=home.php");
+        }
+
+    }
     if(isset($_GET['uid'])){
         $username = $_GET['uid'];
         // $role_arr = array("user", "manager", "admin");
@@ -30,38 +72,22 @@
             echo "Replace Failed!";
     }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
-    <style>
-        nav {
-          height: 8vh;
-        }
-  
-        .container {
-          width: 30%;
-          height: 92vh;
-        }
-  
-        button {
-          width: 100%;
-        }
-      </style>
-
-    <title>Edit</title>
-</head>
-<body>
     <nav class="navbar navbar-light bg-primary">
         <div class="container-fluid">
-          <a class="navbar-brand text-white" href="home.php">IAM - Identity and Access Management</a>
-        </div>
+          <a class="navbar-brand text-white" href="#">IAM - Identity and Access Management</a>
+            <?php 
+                if(isset($_SESSION['login'])){?>
+                    <!-- <a class="nav-item nav-link text-white" href="#">Hello </a> -->
+                    <a class="nav-item nav-link text-white" href="logout.php">Logout</a>
+            <?php
+                }
+                else {
+                    ?>
+                    <a class="nav-item nav-link text-white" href="login.php">Login</a>
+                    <?php                    
+                }
+            ?>
+        </div>        
     </nav>
 
     <div class="container">

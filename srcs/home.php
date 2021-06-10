@@ -1,78 +1,15 @@
 <?php
     session_start();
     include 'config.php';
-    if(isset($_POST['login']))
-    {    
-        if(!isset($_SESSION['id'])){        
-            $username = $_POST['username']; // Get username
-            $password = $_POST['password']; // get password       
-            //dn: distinguish name
-            //uid: user id
-            //ou: organization unit
-        
-            // role 
-            // admin: lam gi cung duoc
-            // manager: chi coi duoc user detail vaf user log, them bot user k dc
-            // user: chi coi duoc thong tin cua chinh user
-            $role_arr = array("user", "manager", "admin");
-            $role = "";
-                
-            for($i = 0; $i < count($role_arr); $i++){
-                $ldap_dn = "uid=".$username.",ou=".$role_arr[$i].",ou=system";            
-                $ldap_password = $password;    
-
-                if (ldap_bind($ldap_con, $ldap_dn, $ldap_password)){
-                    $role = $role_arr[$i];                
-                    break;
-                }
-            }
-                    
-        
-            //     echo "Bind Successful!" . "<br>";
-            // }
-            // else {
-            //     echo "Invalid user/pass or other error!";
-            // }     
-            
-            // if user inputs match if condition will runn
-            if ($role != ""){
-                $_SESSION['login'] = $username; // hold the user name in session
-                $_SESSION['userDn'] = $ldap_dn; // hold the user dn
-                $_SESSION['role'] = $role;            
-                $_SESSION['id'] = session_id(); // get the current session_id
-
-                
-                // $num['id']; // hold the user id in session
-                
-                $userId_db = $_SESSION['id'];
-                $username_db = $_SESSION['login'];
-                $uip = $_SERVER['REMOTE_ADDR']; // get the user ip
-                $action = "Login"; // query for inser user log in to data base
-                $log_query = "INSERT into userlog(userId,username,userIp,action) values('$userId_db','$username_db','$uip','$action')";
-                if(!mysqli_query($db_con, $log_query))
-                    echo "Cant Insert user log!";         
-            }
-            // If the userinput no matched with database else condition will run
-            else
-            {
-                $_SESSION['msg'] = "Invalid username or password";
-                $extra = "login.php";
-                $host = $_SERVER['HTTP_HOST'];
-                $uri = rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
-                header("location:http://$host$uri/$extra");
-                exit();
-            }
-        }
-    }    
-    else if(!isset($_SESSION['id'])){
-        $extra = "login.php";
-        $host = $_SERVER['HTTP_HOST'];
-        $uri = rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
-        header("location:http://$host$uri/$extra");
-        exit();        
+    if(isset($_SESSION['role'])){
+        $role = $_SESSION['role'];
+        if ($role == 'user'){
+            echo "<script> alert(\"You dont have pemission to do this task\")</script>";
+            header("Refresh:0,url=detailInformation.php");
+            exit();
+        }        
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,10 +42,22 @@
     <title>Home</title>
 </head>
 <body>    
-    <nav class="navbar navbar-light bg-primary">
+<nav class="navbar navbar-light bg-primary">
         <div class="container-fluid">
           <a class="navbar-brand text-white" href="#">IAM - Identity and Access Management</a>
-        </div>
+            <?php 
+                if(isset($_SESSION['login'])){?>
+                    <!-- <a class="nav-item nav-link text-white" href="#">Hello </a> -->
+                    <a class="nav-item nav-link text-white" href="logout.php">Logout</a>
+            <?php
+                }
+                else {
+                    ?>
+                    <a class="nav-item nav-link text-white" href="login.php">Login</a>
+                    <?php                    
+                }
+            ?>
+        </div>        
     </nav>
 
     <div class="container m-0">
@@ -213,7 +162,19 @@
                 </table>
 
                 <!-- ---------- Add user form ---------- -->
-
+                <?php
+                    // if(isset($_SESSION['role'])){
+                    //     $role = $_SESSION['role'];
+                    //     if ($role == 'user'){
+                    //         echo "You dont have pemission to do this task";
+                            
+                    //     }
+                    //     else if ($role == 'manager'){
+                    //         echo "You dont have pemission to do this task";
+                            
+                    //     }                
+                    // }
+                ?>
                 <h1 class="new-user-title">Add new user</h1>
 
                 <form action="addUser.php" method="POST" class="new-user">

@@ -1,0 +1,46 @@
+note meeting 2:
+bug #1: login được khi đã login rùi
+
+bug #2: DIT trên LDAP server
+cây mặc định: có cấp quyền sẵn (ngầm)
+tạo mới 1 ou: ai vô xem cũng đc
+-> chỉ xét hệ thông trong 3 cái ou admin, manager, user
+-> lưu role trên SESSION để xét
+
+bug #3: thuộc tính      userpassword: trên PHP
+			userPassword: trên LDAP Server
+
+bug #4: add user cần thêm thuộc tính objectClass = inetOrgPerson
+
+bug #5: bảng log bị sai kiểu dữ liệu
+
+note: cài jvm 11 khi dùng Apache Directory Studio (chỉ dùng phiên bản 11, không được 
+dùng phiên bản cao hơn).
+
+note #2: filter dùng cho ldap_search
+filter : "(!(cn=b*)(uid=a*))" -> hoặc tên bắt đầu bằng chữ b hoặc uid bắt đầu bằng chữ a (OR)
+	 "(&()())" -> AND
+
+quyền người dùng:
+admin: làm gì cũng đc
+manager: chỉ có thể coi, k sửa đc, coi đc userlog
+user: k làm gì đc, chỉ có thể coi thông tin bản thân và thay đổi nó
+
+flow hệ thống:
+user: login xong sẽ hiện thông tin của mình
+manager + admin: -> home.php, khi thực hiện chức năng thì xét quyền
+
+login -> manager, admin: home page -> check role
+      -> user: user detail
+
+chia task: 
+- routing: 			Khoa + Lực
+- db:	   			Khoa + Lực
+- nav-bar: 			Khoa + Lực
+- sửa front-end: 		Khoa
+- thêm vào userlog: 		Khải 
+- dùng OTP mail để đăng nhập: 	Lực
+- report:  			Khải
+
+note: code có thể sai ở bất kỳ chỗ nào, thấy thì nói t (Khải).
+ 
